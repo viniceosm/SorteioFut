@@ -1,0 +1,126 @@
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<style>
+    #res div {
+        margin: 5px 0px;
+        border: 1px solid black;
+        width: 300px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    button {
+        border: 0px solid transparent;
+        width: 300px;
+        border-radius: 5px;
+        background-color: green;
+        color: white;
+    }
+</style>
+
+<body>
+    <div id="res">
+        <div id="time1"></div>
+        <div id="time2"></div>
+        <div id="reservas"></div>
+    </div>
+    <button onclick="compartilharResultado()">compartilhar resultado</button>
+</body>
+
+<script>
+    var jogadores = [
+        { nome: 'Dalton' },
+        { nome: 'Gadotti' },
+        { nome: 'Oli' },
+        { nome: 'Christopher' },
+        { nome: 'Evandro' },
+        { nome: 'Johny' },
+        { nome: 'Lucas Braun' },
+        { nome: 'Matheus Quadros' },
+        { nome: 'Fabio' },
+        { nome: 'Jonatha' },
+        { nome: 'Marcelo' },
+        { nome: 'Rafael' },
+        { nome: 'Thiago' },
+        { nome: 'Johnatan Bastos' },
+        { nome: '9158-4693' }
+    ];
+    
+    var jogadoresNaoVao = [];
+    
+    var qtdJogadorCadaTime = 6;
+    
+    var [time1, time2, reservas] = sortear(jogadores, jogadoresNaoVao, qtdJogadorCadaTime);
+    
+    document.getElementById('time1').innerHTML = time1.join('<br>');
+    document.getElementById('time2').innerHTML = time2.join('<br>');
+    document.getElementById('reservas').innerHTML = reservas.join('<br>');
+    
+    function sortear(jogadores, jogadoresNaoVao, qtdJogadorCadaTime) {
+        var jaSorteados = [];
+        var time1 = [];
+        var time2 = [];
+        var reservas = [];
+    
+        for (var i = 0; i < qtdJogadorCadaTime; i++) {
+            do {
+                var indexSorteado = getRandomInt(jogadores.length);
+            } while (jaSorteados.includes(indexSorteado) == true);
+    
+            jaSorteados.push(indexSorteado);
+    
+            time1.push(jogadores[indexSorteado].nome);
+        }
+    
+        for (var i = 0; i < qtdJogadorCadaTime; i++) {
+            do {
+                var indexSorteado = getRandomInt(jogadores.length);
+            } while (jaSorteados.includes(indexSorteado) == true);
+    
+            jaSorteados.push(indexSorteado);
+    
+            time2.push(jogadores[indexSorteado].nome);
+        }
+    
+        var qtdFaltou = jogadores.length - jaSorteados.length;
+    
+        for (var i = 0; i < qtdFaltou; i++) {
+            do {
+                var indexSorteado = getRandomInt(jogadores.length);
+            } while (jaSorteados.includes(indexSorteado) == true);
+    
+            jaSorteados.push(indexSorteado);
+    
+            reservas.push(jogadores[indexSorteado].nome);
+        }
+    
+        return [time1, time2, reservas];
+    }
+    
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    function compartilharResultado() {
+        html2canvas(document.getElementById('res')).then(function(canvas) {
+            canvas.toBlob(async (blob) => {
+                const files = [new File([blob], 'image.png', { type: blob.type })]
+                const shareData = {
+                    text: 'Some text',
+                    title: 'Some title',
+                    files,
+                }
+                if (navigator.canShare(shareData)) {
+                    try {
+                    await navigator.share(shareData)
+                    } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.error(err.name, err.message)
+                    }
+                    }
+                } else {
+                    console.warn('Sharing not supported', shareData)
+                }
+            })
+        })
+    }
+</script>
