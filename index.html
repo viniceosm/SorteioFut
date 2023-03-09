@@ -1,6 +1,10 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
+    #res {
+        width: 300px;
+        overflow: hidden;
+    }
     #res div {
         margin: 5px 0px;
         border: 1px solid black;
@@ -105,9 +109,9 @@
             canvas.toBlob(async (blob) => {
                 const files = [new File([blob], 'image.png', { type: blob.type })]
                 const shareData = {
-                    text: 'Some text',
-                    title: 'Some title',
-                    files,
+                    /*text: 'Time sorteado',
+                    title: 'Time sorteado',*/
+                    files
                 }
                 if (navigator.canShare(shareData)) {
                     try {
