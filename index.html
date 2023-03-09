@@ -1,26 +1,34 @@
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-<style>
-    #res {
-        width: 300px;
-        overflow: hidden;
-    }
-    #res div {
-        margin: 5px 0px;
-        border: 1px solid black;
-        width: 300px;
-        padding: 5px;
-        border-radius: 5px;
-    }
-    button {
-        border: 0px solid transparent;
-        width: 300px;
-        border-radius: 5px;
-        background-color: green;
-        color: white;
-    }
-</style>
+    <style>
+        #res {
+            width: 300px;
+            overflow: hidden;
+        }
+        #res div {
+            margin: 5px 0px;
+            border: 1px solid black;
+            width: 300px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        button {
+            border: 0px solid transparent;
+            width: 300px;
+            border-radius: 5px;
+            background-color: green;
+            color: white;
+        }
+    </style>
 
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
 <body>
     <div id="res">
         <div id="time1"></div>
@@ -29,6 +37,7 @@
     </div>
     <button onclick="compartilharResultado()">compartilhar resultado</button>
 </body>
+</html>
 
 <script>
     var jogadores = [
