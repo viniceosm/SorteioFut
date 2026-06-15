@@ -1,207 +1,284 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sorteio de Times</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Times Sorteados</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f7b0f, #063b06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    .container {
-      width: 100%;
-      max-width: 380px;
-    }
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f7b0f, #063b06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    #res {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-      overflow: hidden;
-    }
+        #res {
+            width: 900px;
+            max-width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
 
-    .titulo {
-      text-align: center;
-      margin-bottom: 16px;
-    }
+        .titulo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-    .titulo h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #145c14;
-    }
+        .titulo h1 {
+            margin: 0;
+            color: #145c14;
+            font-size: 36px;
+        }
 
-    .titulo p {
-      margin: 5px 0 0;
-      font-size: 13px;
-      color: #777;
-    }
+        .titulo p {
+            margin-top: 8px;
+            color: #777;
+            font-size: 18px;
+        }
 
-    .card-time {
-      margin-top: 12px;
-      border-radius: 14px;
-      padding: 14px;
-      background: #f6f8f6;
-      border: 1px solid #e0e0e0;
-    }
+        .times {
+            display: flex;
+            gap: 20px;
+        }
 
-    .card-time h2 {
-      margin: 0 0 10px;
-      font-size: 17px;
-      color: #222;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .card-time {
+            flex: 1;
+            background: #f6f8f6;
+            border-radius: 15px;
+            padding: 18px;
+            border: 1px solid #e5e5e5;
+        }
 
-    .jogador {
-      background: #fff;
-      padding: 8px 10px;
-      border-radius: 8px;
-      margin-bottom: 6px;
-      font-size: 14px;
-      border-left: 4px solid #168516;
-      color: #333;
-    }
+        .card-time h2,
+        .card-reservas h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
 
-    .reservas .jogador {
-      border-left-color: #f0a500;
-    }
+        .jogador {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 22px;
+            border-left: 6px solid #198f19;
+        }
 
-    button {
-      margin-top: 14px;
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 13px;
-      background: #16a016;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-    }
+        .card-reservas {
+            margin-top: 20px;
+            background: #fff9eb;
+            border-radius: 15px;
+            padding: 18px;
+            border: 1px solid #f3d27c;
+        }
 
-    button:hover {
-      background: #128512;
-    }
-  </style>
+        #reservas {
+            font-size: 24px;
+            line-height: 1.6;
+        }
 
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        button {
+            margin-top: 20px;
+            width: 900px;
+            max-width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            background: #16a016;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background: #128512;
+        }
+
+        @media (max-width: 768px) {
+            .times {
+                gap: 10px;
+            }
+
+            .titulo h1 {
+                font-size: 28px;
+            }
+
+            .titulo p {
+                font-size: 14px;
+            }
+
+            .card-time h2,
+            .card-reservas h2 {
+                font-size: 20px;
+            }
+
+            .jogador {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            #reservas {
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container">
+
     <div id="res">
-      <div class="titulo">
-        <h1>⚽ Times Sorteados</h1>
-        <p>Resultado do sorteio da pelada</p>
-      </div>
+        <div class="titulo">
+            <h1>⚽ Times Sorteados</h1>
+            <p>Resultado do sorteio da pelada</p>
+        </div>
 
-      <div class="card-time">
-        <h2>🟢 Time 1</h2>
-        <div id="time1"></div>
-      </div>
+        <div class="times">
+            <div class="card-time">
+                <h2>🟢 Time 1</h2>
+                <div id="time1"></div>
+            </div>
 
-      <div class="card-time">
-        <h2>⚫ Time 2</h2>
-        <div id="time2"></div>
-      </div>
+            <div class="card-time">
+                <h2>⚫ Time 2</h2>
+                <div id="time2"></div>
+            </div>
+        </div>
 
-      <div class="card-time reservas">
-        <h2>🟡 Reservas</h2>
-        <div id="reservas"></div>
-      </div>
+        <div class="card-reservas">
+            <h2>🟡 Reservas</h2>
+            <div id="reservas"></div>
+        </div>
     </div>
 
-    <button onclick="compartilharResultado()">Compartilhar resultado</button>
-  </div>
+    <button onclick="compartilharResultado()">
+        Compartilhar resultado
+    </button>
+
 </body>
 </html>
 
 <script>
-  var jogadores = [
-    { nome: 'Dalton' },
-    { nome: 'Gadotti' },
-    { nome: 'Oli' },
-    { nome: 'Christopher' },
-    { nome: 'Evandro' },
-    { nome: 'Johny' },
-    { nome: 'Lucas Braun' },
-    { nome: 'Matheus Quadros' },
-    { nome: 'Fabio' },
-    { nome: 'Jonatha' },
-    { nome: 'Marcelo' },
-    { nome: 'Rafael' },
-    { nome: 'Thiago' },
-    { nome: 'Johnatan Bastos' },
-    { nome: '9158-4693' }
-  ];
+    var jogadores = [
+        { nome: 'Dalton' },
+        { nome: 'Gadotti' },
+        { nome: 'Oli' },
+        { nome: 'Christopher' },
+        { nome: 'Evandro' },
+        { nome: 'Johny' },
+        { nome: 'Lucas Braun' },
+        { nome: 'Matheus Quadros' },
+        { nome: 'Fabio' },
+        { nome: 'Jonatha' },
+        { nome: 'Marcelo' },
+        { nome: 'Rafael' },
+        { nome: 'Thiago' },
+        { nome: 'Johnatan Bastos' },
+        { nome: '9158-4693' }
+    ];
 
-  var jogadoresNaoVao = [];
-  var qtdJogadorCadaTime = 6;
+    var jogadoresNaoVao = [];
 
-  var [time1, time2, reservas] = sortear(jogadores, jogadoresNaoVao, qtdJogadorCadaTime);
+    var qtdJogadorCadaTime = 6;
 
-  preencherLista('time1', time1);
-  preencherLista('time2', time2);
-  preencherLista('reservas', reservas);
-
-  function preencherLista(id, lista) {
-    document.getElementById(id).innerHTML = lista
-      .map(nome => `<div class="jogador">${nome}</div>`)
-      .join('');
-  }
-
-  function sortear(jogadores, jogadoresNaoVao, qtdJogadorCadaTime) {
-    var jogadoresDisponiveis = jogadores.filter(jogador =>
-      !jogadoresNaoVao.includes(jogador.nome)
+    var [time1, time2, reservas] = sortear(
+        jogadores,
+        jogadoresNaoVao,
+        qtdJogadorCadaTime
     );
 
-    jogadoresDisponiveis.sort(() => Math.random() - 0.5);
+    preencherTime('time1', time1);
+    preencherTime('time2', time2);
 
-    var time1 = jogadoresDisponiveis.slice(0, qtdJogadorCadaTime).map(j => j.nome);
-    var time2 = jogadoresDisponiveis.slice(qtdJogadorCadaTime, qtdJogadorCadaTime * 2).map(j => j.nome);
-    var reservas = jogadoresDisponiveis.slice(qtdJogadorCadaTime * 2).map(j => j.nome);
+    document.getElementById('reservas').innerHTML =
+        reservas.length
+            ? reservas.join(' • ')
+            : 'Sem reservas';
 
-    return [time1, time2, reservas];
-  }
+    function preencherTime(id, jogadores) {
+        document.getElementById(id).innerHTML =
+            jogadores
+                .map(nome => `<div class="jogador">${nome}</div>`)
+                .join('');
+    }
 
-  function compartilharResultado() {
-    html2canvas(document.getElementById('res')).then(function(canvas) {
-      canvas.toBlob(async (blob) => {
-        const files = [new File([blob], 'times-sorteados.png', { type: blob.type })];
+    function sortear(jogadores, jogadoresNaoVao, qtdJogadorCadaTime) {
 
-        const shareData = {
-          files
-        };
+        var jogadoresDisponiveis = jogadores.filter(
+            jogador => !jogadoresNaoVao.includes(jogador.nome)
+        );
 
-        if (navigator.canShare && navigator.canShare(shareData)) {
-          try {
-            await navigator.share(shareData);
-          } catch (err) {
-            if (err.name !== 'AbortError') {
-              console.error(err.name, err.message);
-            }
-          }
-        } else {
-          alert('Compartilhamento não suportado neste navegador.');
-        }
-      });
-    });
-  }
+        jogadoresDisponiveis.sort(() => Math.random() - 0.5);
+
+        var time1 = jogadoresDisponiveis
+            .slice(0, qtdJogadorCadaTime)
+            .map(j => j.nome);
+
+        var time2 = jogadoresDisponiveis
+            .slice(qtdJogadorCadaTime, qtdJogadorCadaTime * 2)
+            .map(j => j.nome);
+
+        var reservas = jogadoresDisponiveis
+            .slice(qtdJogadorCadaTime * 2)
+            .map(j => j.nome);
+
+        return [time1, time2, reservas];
+    }
+
+    function compartilharResultado() {
+
+        html2canvas(document.getElementById('res'), {
+            scale: 2,
+            backgroundColor: '#ffffff'
+        }).then(function(canvas) {
+
+            canvas.toBlob(async (blob) => {
+
+                const files = [
+                    new File(
+                        [blob],
+                        'times-sorteados.png',
+                        {
+                            type: 'image/png'
+                        }
+                    )
+                ];
+
+                const shareData = {
+                    files
+                };
+
+                if (
+                    navigator.canShare &&
+                    navigator.canShare(shareData)
+                ) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            console.error(err);
+                        }
+                    }
+                } else {
+                    alert(
+                        'Compartilhamento não suportado neste navegador.'
+                    );
+                }
+            });
+        });
+    }
 </script>
